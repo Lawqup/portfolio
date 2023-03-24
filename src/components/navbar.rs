@@ -10,7 +10,7 @@ pub fn Navbar(cx: Scope) -> impl IntoView {
     view! { cx,
         <nav class="h-16 w-screen fixed top-0 z-9999">
             <div class="flex-1 flex m-auto max-w-full min-h-full px-12
-                        justify-between items-center">
+                                                justify-between items-center">
                 <p class="text-violet-600 text-2xl">"Lawrence Qupty"</p>
                 <div class="flex space-x-4 items-center align-middle">
                     {BUTTONS
