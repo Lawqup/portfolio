@@ -21,7 +21,7 @@ leptos_router = { version = "0.2", default-features = false }
 log = "0.4"
 simple_logger = "4"
 wasm-bindgen = "0.2"
-
+# 
 [features]
 hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
 ssr = ["dep:actix-files", "dep:actix-web", "dep:leptos_actix", "leptos/ssr", "leptos_meta/ssr", "leptos_router/ssr"]
