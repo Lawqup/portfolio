@@ -2,7 +2,6 @@ use std::time::Duration;
 
 use super::icons::*;
 use super::navbar::*;
-use cfg_if::cfg_if;
 use leptos::html::Section;
 use leptos::*;
 
@@ -62,41 +61,39 @@ pub fn Start(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
         "Distributed Systems",
     ];
 
-    let (thing_idx, _set_thing_idx) = create_signal(cx, 0);
+    let (thing_idx, set_thing_idx) = create_signal(cx, 0);
 
-    cfg_if! {
-        if #[cfg(not(feature = "ssr"))] {
-            fn next_thing(_set_thing_idx: WriteSignal<usize>) {
-                _set_thing_idx.update(|idx| *idx = (*idx + 1) % THINGS_I_BUILD.len());
-                set_timeout(
-                    move || next_thing(_set_thing_idx),
-                    Duration::from_millis(2500),
-                );
-            }
-
-            set_timeout(
-                move || next_thing(_set_thing_idx),
-                Duration::from_millis(1000),
-            );
-        }
+    fn next_thing(set_thing_idx: WriteSignal<usize>) {
+        set_thing_idx.update(|idx| *idx = (*idx + 1) % THINGS_I_BUILD.len());
+        set_timeout(
+            move || next_thing(set_thing_idx),
+            Duration::from_millis(2500),
+        );
     }
+
+    set_timeout(
+        move || next_thing(set_thing_idx),
+        Duration::from_millis(1000),
+    );
 
     view! { cx,
         <section
             ref=_section_ref
             id="start"
-            class="w-screen h-screen bg-gradient-to-b from-slate-800 to-neutral-900 flex flex-col items-center justify-center space-y-16"
+            class="w-screen h-screen bg-gradient-to-b from-slate-800 to-neutral-900 flex flex-col items-center justify-center"
         >
-            <div class="text-4xl text-white font-light text-left w-96 whitespace-nowrap">
-                <p>"Hi, I'm " <span class="text-violet-600 font-bold">"Lawrence"</span></p>
-                <p>
-                    "I build "
-                    <span class="text-violet-600 font-bold">
-                        {move || THINGS_I_BUILD[thing_idx()]}
-                    </span>
-                </p>
+            <div class="text-4xl text-white font-light text-left w-96 whitespace-nowrap space-y-16">
+                <div>
+                    <p>"Hi, I'm " <span class="text-violet-600 font-bold">"Lawrence"</span></p>
+                    <p>
+                        "I build "
+                        <span class="text-violet-600 font-bold">
+                            {move || THINGS_I_BUILD[thing_idx()]}
+                        </span>
+                    </p>
+                </div>
+                <DownArrow class="w-12 h-12 self-start" color="white"/>
             </div>
-            <DownArrow class="w-12 h-12" color="white"/>
         </section>
     }
 }
