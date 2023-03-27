@@ -24,10 +24,10 @@ pub fn HomePage(cx: Scope) -> impl IntoView {
         let about = about.get().unwrap().scroll_height() + projects;
 
         // Add 30-pixel buffer to switch section a bit before
-        let scroll_y = window().scroll_y().unwrap().ceil() as i32 + 30;
-
+        const SCROLL_BUFFER: i32 = 30;
+        let scroll_y = window().scroll_y().unwrap().ceil() as i32 + SCROLL_BUFFER;
         let curr_idx = match scroll_y {
-            x if (..start).contains(&x) => 0,
+            x if (..start).contains(&x) || scroll_y == SCROLL_BUFFER => 0,
             x if (start..projects).contains(&x) => 1,
             x if (projects..about).contains(&x) => 2,
             x if (about..).contains(&x) => 3,
@@ -61,20 +61,51 @@ pub fn Start(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
         "Distributed Systems",
     ];
 
-    let (thing_idx, set_thing_idx) = create_signal(cx, 0);
+    let next_thing_idx = create_rw_signal(cx, 0);
+    let thing = create_rw_signal(cx, THINGS_I_BUILD[0].to_string());
 
-    fn next_thing(set_thing_idx: WriteSignal<usize>) {
-        set_thing_idx.update(|idx| *idx = (*idx + 1) % THINGS_I_BUILD.len());
+    fn next_thing(next_thing_idx: RwSignal<usize>, thing: RwSignal<String>) {
+        next_thing_idx.update(|idx| *idx = (*idx + 1) % THINGS_I_BUILD.len());
+
         set_timeout(
-            move || next_thing(set_thing_idx),
+            move || next_thing(next_thing_idx, thing),
             Duration::from_millis(2500),
         );
+
+        const HALF_ANIMATION_MILLIS: u64 = 500;
+
+        let old_len = thing().len() as u64;
+        for i in 0..old_len {
+            set_timeout(
+                move || {
+                    thing.update(|th| {
+                        th.pop();
+                    })
+                },
+                Duration::from_millis((i + 1) * HALF_ANIMATION_MILLIS / old_len),
+            );
+        }
+
+        let new_len = THINGS_I_BUILD[next_thing_idx()].len() as u64;
+        for i in 0..new_len {
+            set_timeout(
+                move || {
+                    thing.update(|th| {
+                        *th += &THINGS_I_BUILD[next_thing_idx()]
+                            .chars()
+                            .nth(i as usize)
+                            .unwrap()
+                            .to_string()
+                    })
+                },
+                Duration::from_millis(
+                    HALF_ANIMATION_MILLIS + (i + 1) * HALF_ANIMATION_MILLIS / new_len,
+                ),
+            )
+        }
     }
 
-    set_timeout(
-        move || next_thing(set_thing_idx),
-        Duration::from_millis(1000),
-    );
+    next_thing(next_thing_idx, thing);
 
     view! { cx,
         <section
@@ -85,12 +116,7 @@ pub fn Start(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
             <div class="text-4xl text-white font-light text-left w-96 whitespace-nowrap space-y-16">
                 <div>
                     <p>"Hi, I'm " <span class="text-violet-600 font-bold">"Lawrence"</span></p>
-                    <p>
-                        "I build "
-                        <span class="text-violet-600 font-bold">
-                            {move || THINGS_I_BUILD[thing_idx()]}
-                        </span>
-                    </p>
+                    <p>"I build " <span class="text-violet-600 font-bold">{thing}</span></p>
                 </div>
                 <DownArrow class="w-12 h-12 self-start" color="white"/>
             </div>
