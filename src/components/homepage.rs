@@ -2,6 +2,8 @@ use std::time::Duration;
 
 use super::icons::*;
 use super::navbar::*;
+use super::project::*;
+
 use leptos::html::Section;
 use leptos::*;
 
@@ -127,8 +129,14 @@ pub fn Start(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
 #[component]
 pub fn Projects(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
     view! { cx,
-        <section ref=_section_ref id="projects" class="w-screen h-screen bg-neutral-900">
-            <h1>"Projects"</h1>
+        <section
+            ref=_section_ref
+            id="projects"
+            class="w-screen h-screen bg-neutral-900 flex justify-evenly space-x-16 flex-wrap"
+        >
+            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
+            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
+            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
         </section>
     }
 }
