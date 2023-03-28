@@ -132,7 +132,7 @@ pub fn Projects(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
         <section
             ref=_section_ref
             id="projects"
-            class="w-screen h-screen bg-neutral-900 flex justify-evenly space-x-16 flex-wrap"
+            class="w-screen h-screen bg-neutral-900 flex justify-evenly items-center space-x-16 flex-wrap"
         >
             <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
             <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
