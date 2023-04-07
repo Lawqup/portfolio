@@ -8,5 +8,6 @@ body {
 }
 
 html {
-    @apply scroll-smooth
+    @apply scroll-smooth;
+    color-scheme: dark;
 }

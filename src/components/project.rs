@@ -6,7 +6,7 @@ pub fn ProjectCard(cx: Scope, title: &'static str, src: &'static str) -> impl In
 
     view! { cx,
         <a
-            class="w-80 h-[32rem] bg-violet-600 rounded-lg px-4 py-2 flex justify-around space-y-8 flex-col border-2 border-white border-solid"
+            class="w-80 h-[32rem] bg-violet-600 rounded-lg m-16 px-4 py-2 flex justify-around space-y-8 flex-col border-2 border-white border-solid"
             href=link
         >
             <img class="rounded-lg border-2 border-white border-solid" src=src/>
