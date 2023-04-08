@@ -39,9 +39,15 @@ fn NavbarButton(
 
     let get_container_class =
         move || CONTAINER.to_string() + if selected_idx() == idx { SELECTED } else { "" };
+    let reset_href = move |_| {
+        window()
+            .location()
+            .set_hash(&name.to_lowercase())
+            .expect("Couldn't set hash");
+    };
 
     view! { cx,
-        <a href=format!("#{}", name.to_lowercase()) class=get_container_class>
+        <a href=format!("#{}", name.to_lowercase()) class=get_container_class on:click=reset_href>
             <span class=TEXT>{name}</span>
         </a>
     }

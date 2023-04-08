@@ -137,13 +137,6 @@ pub fn Projects(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
             <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
             <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
             <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
-            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
-            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
-            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
-            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
-            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
-            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
-            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
         </section>
     }
 }
