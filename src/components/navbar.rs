@@ -32,7 +32,7 @@ fn NavbarButton(
     selected_idx: ReadSignal<usize>,
 ) -> impl IntoView {
     const CONTAINER: &str = "rounded-md px-8 py-1 flex w-32 group";
-    const SELECTED: &str = " bg-gray-700";
+    const SELECTED: &str = " bg-gray-700 opacity-75";
 
     const TEXT: &str = "text-white text-center text-lg w-full h-full relative \
                                 transition-all duration-200 group-hover:-translate-y-2";

@@ -529,36 +529,16 @@ video {
   top: 0px;
 }
 
-.col-span-full {
-  grid-column: 1 / -1;
-}
-
-.col-span-2 {
-  grid-column: span 2 / span 2;
+.m-16 {
+  margin: 4rem;
 }
 
 .m-auto {
   margin: auto;
 }
 
-.m-12 {
-  margin: 3rem;
-}
-
-.m-2 {
-  margin: 0.5rem;
-}
-
-.m-16 {
-  margin: 4rem;
-}
-
 .flex {
   display: flex;
-}
-
-.grid {
-  display: grid;
 }
 
 .h-12 {
@@ -621,32 +601,12 @@ video {
   flex: 1 1 0%;
 }
 
-.auto-rows-auto {
-  grid-auto-rows: auto;
-}
-
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
 .flex-col {
   flex-direction: column;
 }
 
 .flex-wrap {
   flex-wrap: wrap;
-}
-
-.place-content-center {
-  place-content: center;
-}
-
-.place-items-center {
-  place-items: center;
 }
 
 .items-center {
@@ -663,22 +623,6 @@ video {
 
 .justify-around {
   justify-content: space-around;
-}
-
-.justify-evenly {
-  justify-content: space-evenly;
-}
-
-.justify-items-end {
-  justify-items: end;
-}
-
-.justify-items-center {
-  justify-items: center;
-}
-
-.gap-28 {
-  gap: 7rem;
 }
 
 .space-x-4 > :not([hidden]) ~ :not([hidden]) {
@@ -699,14 +643,12 @@ video {
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
 }
 
-.space-x-16 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(4rem * var(--tw-space-x-reverse));
-  margin-left: calc(4rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
 .self-start {
   align-self: flex-start;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .whitespace-nowrap {
@@ -752,6 +694,11 @@ video {
 .bg-violet-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(76 29 149 / var(--tw-bg-opacity));
+}
+
+.bg-violet-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(167 139 250 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-b {
@@ -852,8 +799,20 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.opacity-75 {
+  opacity: 0.75;
+}
+
 .transition-all {
   transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
@@ -862,8 +821,8 @@ video {
   transition-duration: 200ms;
 }
 
-.grid-auto-fit {
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+.duration-500 {
+  transition-duration: 500ms;
 }
 
 body {
@@ -874,6 +833,165 @@ body {
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+}
+
+.before\:absolute::before {
+  content: var(--tw-content);
+  position: absolute;
+}
+
+.before\:-left-full::before {
+  content: var(--tw-content);
+  left: -100%;
+}
+
+.before\:top-0::before {
+  content: var(--tw-content);
+  top: 0px;
+}
+
+.before\:-left-0::before {
+  content: var(--tw-content);
+  left: -0px;
+}
+
+.before\:-top-full::before {
+  content: var(--tw-content);
+  top: -100%;
+}
+
+.before\:h-full::before {
+  content: var(--tw-content);
+  height: 100%;
+}
+
+.before\:h-32::before {
+  content: var(--tw-content);
+  height: 8rem;
+}
+
+.before\:h-\[32rem\]::before {
+  content: var(--tw-content);
+  height: 32rem;
+}
+
+.before\:h-80::before {
+  content: var(--tw-content);
+  height: 20rem;
+}
+
+.before\:h-\[40rem\]::before {
+  content: var(--tw-content);
+  height: 40rem;
+}
+
+.before\:w-full::before {
+  content: var(--tw-content);
+  width: 100%;
+}
+
+.before\:w-80::before {
+  content: var(--tw-content);
+  width: 20rem;
+}
+
+.before\:w-\[32rem\]::before {
+  content: var(--tw-content);
+  width: 32rem;
+}
+
+.before\:w-\[40rem\]::before {
+  content: var(--tw-content);
+  width: 40rem;
+}
+
+.before\:rounded-full::before {
+  content: var(--tw-content);
+  border-radius: 9999px;
+}
+
+.before\:bg-white::before {
+  content: var(--tw-content);
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.before\:bg-gradient-to-r::before {
+  content: var(--tw-content);
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.before\:bg-gradient-to-l::before {
+  content: var(--tw-content);
+  background-image: linear-gradient(to left, var(--tw-gradient-stops));
+}
+
+.before\:bg-gradient-to-tl::before {
+  content: var(--tw-content);
+  background-image: linear-gradient(to top left, var(--tw-gradient-stops));
+}
+
+.before\:from-white::before {
+  content: var(--tw-content);
+  --tw-gradient-from: #fff;
+  --tw-gradient-to: rgb(255 255 255 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.before\:to-white::before {
+  content: var(--tw-content);
+  --tw-gradient-to: #fff;
+}
+
+.before\:transition::before {
+  content: var(--tw-content);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.before\:transition-all::before {
+  content: var(--tw-content);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.before\:duration-500::before {
+  content: var(--tw-content);
+  transition-duration: 500ms;
+}
+
+.before\:content-\[\'\'\]::before {
+  --tw-content: '';
+  content: var(--tw-content);
+}
+
+.hover\:bg-rose-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(225 29 72 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-violet-900:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(76 29 149 / var(--tw-bg-opacity));
+}
+
+.hover\:before\:left-full:hover::before {
+  content: var(--tw-content);
+  left: 100%;
+}
+
+.hover\:before\:top-full:hover::before {
+  content: var(--tw-content);
+  top: 100%;
+}
+
+.hover\:before\:left-1\/2:hover::before {
+  content: var(--tw-content);
+  left: 50%;
 }
 
 .group:hover .group-hover\:-translate-y-2 {
