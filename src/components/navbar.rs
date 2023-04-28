@@ -6,11 +6,11 @@ pub fn Navbar(cx: Scope, selected_idx: ReadSignal<usize>) -> impl IntoView {
     const BUTTONS: [&str; 4] = ["Start", "Projects", "About", "Contact"];
 
     view! { cx,
-        <nav class="h-16 w-screen fixed top-0 z-9999">
+        <nav class="h-16 w-screen fixed top-0 z-50 pointer-events-none">
             <div class="flex-1 flex m-auto max-w-full min-h-full px-12
             justify-between items-center">
-                <p class="text-violet-600 text-2xl">"Lawrence Qupty"</p>
-                <div class="flex space-x-4 items-center align-middle">
+                <p class="text-violet-600 text-2xl pointer-events-auto">"Lawrence Qupty"</p>
+                <div class="flex space-x-4 items-center align-middle pointer-events-auto">
                     {BUTTONS
                         .into_iter()
                         .enumerate()
