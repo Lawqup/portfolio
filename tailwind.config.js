@@ -4,9 +4,18 @@ module.exports = {
     files: ["*.html", "./src/**/*.rs"],
   },
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        shake: {
+          '25%': {transform: 'translate(-5px)'},
+          '75%': {transform: 'translate(5px)'},
+        },
+      },
+      animation: {
+        shake: 'shake 0.35s linear 2',
+      },
+    },
   },
   plugins: [
-    require('@shrutibalasa/tailwind-grid-auto-fit'),
   ],
 }

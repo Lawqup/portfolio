@@ -180,6 +180,8 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
     let (email, set_email) = create_signal(cx, String::new());
     let (message, set_message) = create_signal(cx, String::new());
 
+    let (email_error, set_email_error) = create_signal(cx, false);
+
     let handle_send = move |_| {
         lazy_static! {
             static ref EMAIL_RE: Regex =
@@ -187,7 +189,15 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
         }
 
         if !EMAIL_RE.is_match(&email()) {
+            set_email_error(true);
             return;
+        }
+    };
+
+    let input_class = move |is_err: ReadSignal<bool>| {
+        move || {
+            "ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400".to_string()
+        + if is_err() { " animate-shake border-rose-600" } else { "" }
         }
     };
 
@@ -201,14 +211,14 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                 on:click=move |_| set_open(true)
                 class="bg-black text-white text-2xl font-medium w-80 h-24 rounded-full flex items-center justify-around hover:bg-violet-600 transition duration-500"
             >
-                "Contact me!"
+                "Contact me"
                 <RightArrow class="w-12 h-12"/>
             </button>
             <form class="w-[30rem] h-[40rem] min-h-fit bg-slate-800 rounded-[20px] text-2xl font-medium p-8 text-left">
                 <label class="px-8">
                     "I'm"
                     <input
-                        class="ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-rose-600"
+                        class="ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400"
                         type="text"
                         placeholder="your name"
                         on:input=move |ev| {
@@ -221,17 +231,18 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                 <label class="px-8">
                     "My email is"
                     <input
-                        class="ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-rose-600"
+                        class=input_class(email_error)
                         type="text"
                         placeholder="your email"
                         on:input=move |ev| {
                             let val = event_target_value(&ev);
                             set_email(val);
                         }
+                        on:focus=move |_| set_email_error(false)
                     />
                 </label>
                 <textarea
-                    class="resize-none rounded-lg bg-black my-8 p-8 justify-self-center w-full h-3/5 outline-none focus:border-rose-600 focus:border-2"
+                    class="resize-none rounded-lg bg-black my-8 p-8 justify-self-center w-full h-3/5"
                     placeholder="Your message..."
                     on:input=move |ev| {
                         let val = event_target_value(&ev);
@@ -240,12 +251,13 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                 ></textarea>
                 <div class="w-full flex justify-center pb">
                     <button
-                        class="bg-black w-56 h-20 rounded-full flex items-center justify-around hover:bg-violet-600 transition duration-500"
+                        class="bg-black w-56 h-20 rounded-full flex items-center justify-around hover:bg-violet-600 transition duration-500 disabled:opacity-75 disabled:bg-gray-700"
+                        disabled=move || name().is_empty() || email().is_empty() || message().is_empty()
                         type="submit"
                         on:click=handle_send
                     >
                         <LeftArrow class="w-12 h-12"/>
-                        "Send!"
+                        "Send"
                     </button>
                 </div>
             </form>
