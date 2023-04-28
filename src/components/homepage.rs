@@ -1,9 +1,11 @@
+use regex::Regex;
 use std::time::Duration;
 
 use super::icons::*;
 use super::navbar::*;
 use super::project::*;
 
+use lazy_static::lazy_static;
 use leptos::html::Section;
 use leptos::*;
 
@@ -147,7 +149,7 @@ pub fn About(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
         <section
             ref=_section_ref
             id="about"
-            class="w-screen h-screen bg-gradient-to-b from-neutral-900 to-violet-950 flex flex-col items-center justify-center"
+            class="w-screen min-h-screen bg-gradient-to-b from-neutral-900 to-violet-950 flex flex-col items-center justify-center"
         >
             <div class="text-2xl text-white font-light text-left w-1/2 space-y-16">
                 <h1 class="text-5xl font-semibold">"About me"</h1>
@@ -173,9 +175,80 @@ pub fn About(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
 }
 #[component]
 pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
+    let (open, set_open) = create_signal(cx, false);
+    let (name, set_name) = create_signal(cx, String::new());
+    let (email, set_email) = create_signal(cx, String::new());
+    let (message, set_message) = create_signal(cx, String::new());
+
+    let handle_send = move |_| {
+        lazy_static! {
+            static ref EMAIL_RE: Regex =
+                Regex::new("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$").unwrap();
+        }
+
+        if !EMAIL_RE.is_match(&email()) {
+            return;
+        }
+    };
+
     view! { cx,
-        <section ref=_section_ref id="contact" class="w-screen h-screen bg-violet-950">
-            <h1>"Contact"</h1>
+        <section
+            ref=_section_ref
+            id="contact"
+            class="w-screen min-h-screen bg-violet-950 flex items-center justify-center space-x-16"
+        >
+            <button
+                on:click=move |_| set_open(true)
+                class="bg-black text-white text-2xl font-medium w-80 h-24 rounded-full flex items-center justify-around hover:bg-violet-600 transition duration-500"
+            >
+                "Contact me!"
+                <RightArrow class="w-12 h-12"/>
+            </button>
+            <form class="w-[30rem] h-[40rem] min-h-fit bg-slate-800 rounded-[20px] text-2xl font-medium p-8 text-left">
+                <label class="px-8">
+                    "I'm"
+                    <input
+                        class="ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-rose-600"
+                        type="text"
+                        placeholder="your name"
+                        on:input=move |ev| {
+                            let val = event_target_value(&ev);
+                            set_name(val);
+                        }
+                    />
+                </label>
+                <br/>
+                <label class="px-8">
+                    "My email is"
+                    <input
+                        class="ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-rose-600"
+                        type="text"
+                        placeholder="your email"
+                        on:input=move |ev| {
+                            let val = event_target_value(&ev);
+                            set_email(val);
+                        }
+                    />
+                </label>
+                <textarea
+                    class="resize-none rounded-lg bg-black my-8 p-8 justify-self-center w-full h-3/5 outline-none focus:border-rose-600 focus:border-2"
+                    placeholder="Your message..."
+                    on:input=move |ev| {
+                        let val = event_target_value(&ev);
+                        set_message(val);
+                    }
+                ></textarea>
+                <div class="w-full flex justify-center pb">
+                    <button
+                        class="bg-black w-56 h-20 rounded-full flex items-center justify-around hover:bg-violet-600 transition duration-500"
+                        type="submit"
+                        on:click=handle_send
+                    >
+                        <LeftArrow class="w-12 h-12"/>
+                        "Send!"
+                    </button>
+                </div>
+            </form>
         </section>
     }
 }
