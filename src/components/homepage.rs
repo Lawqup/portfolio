@@ -1,5 +1,4 @@
 use gloo_net::http::Headers;
-use gloo_net::http::Method;
 use gloo_net::http::Request;
 use regex::Regex;
 use std::time::Duration;
@@ -182,14 +181,9 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
     let (name, set_name) = create_signal(cx, String::new());
     let (email, set_email) = create_signal(cx, String::new());
     let (message, set_message) = create_signal(cx, String::new());
-    let (email_error, set_email_error) = create_signal(cx, false);
-
-    let input_class = move |is_err: ReadSignal<bool>| {
-        move || {
-            "ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400".to_string()
-        + if is_err() { " animate-shake border-rose-600" } else { "" }
-        }
-    };
+    let (email_err, set_email_err) = create_signal(cx, false);
+    let (submit_err, set_submit_err) = create_signal(cx, false);
+    let (submitted, set_submitted) = create_signal(cx, false);
 
     let handle_send = move |_| {
         spawn_local(async move {
@@ -199,7 +193,7 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
             }
 
             if !EMAIL_RE.is_match(&email()) {
-                set_email_error(true);
+                set_email_err(true);
                 return;
             }
 
@@ -218,6 +212,14 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                 .body(body)
                 .send()
                 .await;
+
+            if res.is_err() || res.unwrap().status() != 200 {
+                set_submit_err(true);
+            } else {
+                set_submit_err(false);
+                set_open(false);
+                set_submitted(true);
+            }
         })
     };
 
@@ -225,16 +227,40 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
         <section
             ref=_section_ref
             id="contact"
-            class="w-screen min-h-screen bg-violet-950 flex items-center justify-center space-x-16"
+            class="w-screen min-h-screen bg-violet-950 flex items-center justify-center relative overflow-hidden"
         >
-            <button
-                on:click=move |_| set_open(true)
-                class="bg-black text-white text-2xl font-medium w-80 h-24 rounded-full flex items-center justify-around hover:bg-violet-600 transition duration-500"
-            >
-                "Contact me"
-                <RightArrow class="w-12 h-12"/>
-            </button>
-            <form class="w-[30rem] h-[40rem] min-h-fit bg-slate-800 rounded-[20px] text-2xl font-medium p-8 text-left">
+            <div class="absolute">
+                <button
+                    on:click=move |_| set_open(true)
+                    disabled=submitted
+                    class=move || {
+                        "bg-black text-white text-2xl font-medium w-80 h-24 rounded-full flex items-center justify-around hover:bg-violet-600 transition-all duration-500 disabled:bg-violet-600 m-8"
+                            .to_string() + if open() { " -translate-x-[150vh]" } else { "" }
+                    }
+                >
+                    {move || {
+                        if submitted() {
+                            view! { cx,
+                                "Message sent"
+                                <></>
+                            }
+                        } else {
+                            view! { cx,
+                                "Contact me"
+                                <RightArrow class="w-12 h-12"/>
+                            }
+                        }
+                    }}
+                </button>
+                <p class=move || {
+                    "text-2xl font-light transition-all duration-300 delay-500".to_string()
+                        + if submitted() { " opacity-100" } else { " opacity-0" }
+                }>"I'll get back to you soon!"</p>
+            </div>
+            <div class=move || {
+                "w-[30rem] h-[40rem] min-h-fit bg-slate-800 rounded-[20px] text-2xl font-medium p-8 text-left transition-transform absolute duration-500"
+                    .to_string() + if !open() { " translate-x-[150vh]" } else { "" }
+            }>
                 <label class="px-8">
                     "I'm"
                     <input
@@ -251,14 +277,17 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                 <label class="px-8">
                     "My email is"
                     <input
-                        class=input_class(email_error)
+                        class=move || {
+                            "ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400"
+                                .to_string() + if email_err() { " animate-shake border-rose-600" } else { "" }
+                        }
                         type="text"
                         placeholder="your email"
                         on:input=move |ev| {
                             let val = event_target_value(&ev);
                             set_email(val);
                         }
-                        on:focus=move |_| set_email_error(false)
+                        on:focus=move |_| set_email_err(false)
                     />
                 </label>
                 <textarea
@@ -269,18 +298,23 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                         set_message(val);
                     }
                 ></textarea>
-                <div class="w-full flex justify-center pb">
+                <div class="w-full flex flex-col items-center justify-center">
+                    <p
+                        class:hidden=move || !submit_err()
+                        class="font-normal text-sm text-rose-600 pb-2"
+                    >
+                        "An error occured, please try again later."
+                    </p>
                     <button
                         class="bg-black w-56 h-20 rounded-full flex items-center justify-around hover:bg-violet-600 transition duration-500 disabled:opacity-75 disabled:bg-gray-700"
                         disabled=move || name().is_empty() || email().is_empty() || message().is_empty()
-                        type="submit"
                         on:click=handle_send
                     >
                         <LeftArrow class="w-12 h-12"/>
                         "Send"
                     </button>
                 </div>
-            </form>
+            </div>
         </section>
     }
 }
