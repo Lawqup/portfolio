@@ -138,9 +138,26 @@ pub fn Projects(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
             id="projects"
             class="w-screen min-h-screen bg-neutral-900 flex justify-center items-center flex-wrap"
         >
-            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
-            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
-            <ProjectCard title="Portfolio Website" src="/assets/portfolio_project.png"/>
+            <ProjectCard
+                title="Portfolio Website"
+                src="/assets/portfolio_project.png"
+                link="https://www.lawrence-qupty.com"
+            />
+            <ProjectCard
+                title="Vision"
+                src="/assets/vision_logo.png"
+                link="https://www.vision.eco/"
+            />
+            <ProjectCard
+                title="Fit Social"
+                src="/assets/fitsocial_image.png"
+                link="https://github.com/Monacr/FitSocial"
+            />
+            <ProjectCard
+                title="Husky Navigation Services"
+                src="/assets/hnav_logo.png"
+                link="https://huskynavigation.azurewebsites.net"
+            />
         </section>
     }
 }
