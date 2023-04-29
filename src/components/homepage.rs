@@ -291,17 +291,17 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                     />
                 </label>
                 <textarea
-                    class="resize-none rounded-lg bg-black my-8 p-8 justify-self-center w-full h-3/5"
+                    class="resize-none rounded-lg bg-black my-8 py-8 px-4 justify-self-center w-full h-3/5"
                     placeholder="Your message..."
                     on:input=move |ev| {
                         let val = event_target_value(&ev);
                         set_message(val);
                     }
                 ></textarea>
-                <div class="w-full flex flex-col items-center justify-center">
+                <div class="w-full flex flex-col items-center justify-center relative">
                     <p
-                        class:hidden=move || !submit_err()
-                        class="font-normal text-sm text-rose-600 pb-2"
+                        hidden=move || !submit_err()
+                        class="font-normal text-sm text-rose-600 absolute -bottom-6"
                     >
                         "An error occured, please try again later."
                     </p>
