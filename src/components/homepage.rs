@@ -1,3 +1,6 @@
+use gloo_net::http::Headers;
+use gloo_net::http::Method;
+use gloo_net::http::Request;
 use regex::Regex;
 use std::time::Duration;
 
@@ -179,26 +182,43 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
     let (name, set_name) = create_signal(cx, String::new());
     let (email, set_email) = create_signal(cx, String::new());
     let (message, set_message) = create_signal(cx, String::new());
-
     let (email_error, set_email_error) = create_signal(cx, false);
-
-    let handle_send = move |_| {
-        lazy_static! {
-            static ref EMAIL_RE: Regex =
-                Regex::new("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$").unwrap();
-        }
-
-        if !EMAIL_RE.is_match(&email()) {
-            set_email_error(true);
-            return;
-        }
-    };
 
     let input_class = move |is_err: ReadSignal<bool>| {
         move || {
             "ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400".to_string()
         + if is_err() { " animate-shake border-rose-600" } else { "" }
         }
+    };
+
+    let handle_send = move |_| {
+        spawn_local(async move {
+            lazy_static! {
+                static ref EMAIL_RE: Regex =
+                    Regex::new(r"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$").unwrap();
+            }
+
+            if !EMAIL_RE.is_match(&email()) {
+                set_email_error(true);
+                return;
+            }
+
+            let headers = Headers::new();
+            headers.append("Content-Type", "application/json");
+            headers.append("Accept", "application/json");
+
+            let body = format!(
+                r#"{{"name":"{}", "email":"{}", "message":"{}"}}"#,
+                name(),
+                email(),
+                message()
+            );
+            let res = Request::post("https://formsubmit.co/ajax/lawrencequp@gmail.com")
+                .headers(headers)
+                .body(body)
+                .send()
+                .await;
+        })
     };
 
     view! { cx,
