@@ -1,9 +1,7 @@
 use gloo_net::http::Headers;
 use gloo_net::http::Request;
-use leptos::html::A;
 use regex::Regex;
 use std::time::Duration;
-use web_sys::MouseEvent;
 
 use super::icons::*;
 use super::navbar::*;
@@ -114,6 +112,13 @@ pub fn Start(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
     }
 
     next_thing(next_thing_idx, thing);
+
+    let reset_href = move |_| {
+        window()
+            .location()
+            .set_hash("projects")
+            .expect("Couldn't set hash");
+    };
     view! { cx,
         <section
             ref=_section_ref
@@ -125,7 +130,9 @@ pub fn Start(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                     <p>"Hi, I'm " <span class="text-violet-600 font-bold">"Lawrence"</span></p>
                     <p>"I build " <span class="text-violet-600 font-bold">{thing}</span></p>
                 </div>
-                <DownArrow class="w-12 h-12 self-start" color="white"/>
+                <a href="#projects" on:click=reset_href>
+                    <DownArrow class="w-12 h-12 mt-12" color="white"/>
+                </a>
             </div>
         </section>
     }
@@ -142,7 +149,7 @@ pub fn Projects(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
             <ProjectCard
                 title="Portfolio Website"
                 src="/assets/portfolio_project.png"
-                link="https://www.lawrence-qupty.com"
+                link="https://github.com/Lawqup/portfolio"
             />
             <ProjectCard
                 title="Vision"
