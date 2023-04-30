@@ -2,6 +2,10 @@
 # will have compiled files and executables
 /target/
 /dist/
+/.log/
+/.firebase/
+/.github/workflows/
+
 Cargo.lock
 pkg
 
