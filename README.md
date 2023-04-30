@@ -1,4 +1,6 @@
-Personal portfolio website. Link to website goes here (WIP).
+Personal portfolio website. Check it out: 
 
-I'm using this as an opportunity to learn [Actix](https://actix.rs/) and [Leptos](https://github.com/leptos-rs/leptos).
+This website is enitrely written in Rust, using the [leptos](https://github.com/leptos-rs/leptos) webassembly framework.
+
+This a little challenge I gave myself to build a frontend in something other than javascript.
 
