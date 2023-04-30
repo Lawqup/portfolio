@@ -1,7 +1,9 @@
 use gloo_net::http::Headers;
 use gloo_net::http::Request;
+use leptos::html::A;
 use regex::Regex;
 use std::time::Duration;
+use web_sys::MouseEvent;
 
 use super::icons::*;
 use super::navbar::*;
@@ -112,7 +114,6 @@ pub fn Start(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
     }
 
     next_thing(next_thing_idx, thing);
-
     view! { cx,
         <section
             ref=_section_ref
@@ -136,7 +137,7 @@ pub fn Projects(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
         <section
             ref=_section_ref
             id="projects"
-            class="w-screen min-h-screen bg-neutral-900 flex justify-center items-center flex-wrap"
+            class="w-screen min-h-screen bg-neutral-900 flex justify-center items-center flex-wrap relative"
         >
             <ProjectCard
                 title="Portfolio Website"
