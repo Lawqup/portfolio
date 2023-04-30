@@ -1,0 +1,7 @@
+{
+  "hosting": {
+    "site": "lawrence-qupty",
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  }
+}

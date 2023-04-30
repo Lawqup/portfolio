@@ -1,4 +1,4 @@
-Personal portfolio website. Check it out: 
+Personal portfolio website. Check it out: https://lawrence-qupty.web.app/
 
 This website is enitrely written in Rust, using the [leptos](https://github.com/leptos-rs/leptos) webassembly framework, with [tailwind](https://tailwindcss.com/) for css.
 
