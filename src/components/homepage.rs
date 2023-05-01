@@ -289,7 +289,7 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                 <label class="px-8 flex">
                     "I'm"
                     <input
-                        class="ml-2 text-violet-600 bg-transparent border-b-[5px] lg:border-b-5 border-violet-600 w-52 outline-none focus:border-teal-400 grow -top-0.5 relative"
+                        class="ml-2 text-violet-600 bg-transparent border-b-[5px] lg:border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400 grow -top-0.5 relative"
                         type="text"
                         placeholder="your name"
                         on:input=move |ev| {
