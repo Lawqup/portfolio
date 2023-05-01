@@ -125,13 +125,13 @@ pub fn Start(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
             id="start"
             class="w-screen h-screen bg-gradient-to-b from-slate-800 to-neutral-900 flex flex-col items-center justify-center"
         >
-            <div class="text-4xl text-white font-light text-left w-96 whitespace-nowrap space-y-16">
+            <div class="text-6xl lg:text-4xl text-white font-light text-left w-[46rem] lg:w-96 whitespace-nowrap space-y-16">
                 <div>
                     <p>"Hi, I'm " <span class="text-violet-600 font-bold">"Lawrence"</span></p>
                     <p>"I build " <span class="text-violet-600 font-bold">{thing}</span></p>
                 </div>
                 <a href="#projects" on:click=reset_href>
-                    <DownArrow class="w-12 h-12 mt-12" color="white"/>
+                    <DownArrow class="w-28 h-28 mt-24 lg:w-12 lg:h-12 lg:mt-12" color="white"/>
                 </a>
             </div>
         </section>
@@ -178,8 +178,8 @@ pub fn About(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
             id="about"
             class="w-screen min-h-screen bg-gradient-to-b from-neutral-900 to-violet-950 flex flex-col items-center justify-center"
         >
-            <div class="text-2xl text-white font-light text-left w-1/2 space-y-16">
-                <h1 class="text-5xl font-semibold">"About me"</h1>
+            <div class="text-4xl lg:text-2xl text-white font-light text-left w-5/6 lg:w-1/2 space-y-16">
+                <h1 class="text-8xl lg:text-5xl font-semibold">"About me"</h1>
                 <p>
                     "I'm a developer interested in a bit of everything. From frontend to distributed systems to quantum computing, my only constraint is that I need to be constantly learning."
                 </p>
@@ -252,14 +252,14 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
         <section
             ref=_section_ref
             id="contact"
-            class="w-screen min-h-screen bg-violet-950 flex items-center justify-center relative overflow-hidden"
+            class="w-screen h-screen bg-violet-950 flex items-center justify-center relative overflow-hidden"
         >
             <div class="absolute">
                 <button
                     on:click=move |_| set_open(true)
                     disabled=submitted
                     class=move || {
-                        "bg-black text-white text-2xl font-medium w-80 h-24 rounded-full flex items-center justify-around hover:bg-violet-600 transition-all duration-500 disabled:bg-violet-600 m-8"
+                        "bg-black text-white text-4xl lg:text-2xl font-medium w-[30rem] h-[9rem] lg:w-80 lg:h-24 rounded-full flex items-center justify-around hover:bg-violet-600 transition-all duration-500 disabled:bg-violet-600 m-8"
                             .to_string() + if open() { " -translate-x-[150vh]" } else { "" }
                     }
                 >
@@ -283,13 +283,13 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                 }>"I'll get back to you soon!"</p>
             </div>
             <div class=move || {
-                "w-[30rem] h-[40rem] min-h-fit bg-slate-800 rounded-[20px] text-2xl font-medium p-8 text-left transition-transform absolute duration-500"
+                "w-[51rem] h-[68rem] lg:w-[30rem] lg:h-[40rem] min-h-fit bg-slate-800 rounded-[25.5px] lg:rounded-[20px] text-4xl lg:text-2xl font-medium p-8 text-left transition-transform absolute duration-500"
                     .to_string() + if !open() { " translate-x-[150vh]" } else { "" }
             }>
-                <label class="px-8">
+                <label class="px-8 flex">
                     "I'm"
                     <input
-                        class="ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400"
+                        class="ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400 grow -top-0.5 relative"
                         type="text"
                         placeholder="your name"
                         on:input=move |ev| {
@@ -299,11 +299,11 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                     />
                 </label>
                 <br/>
-                <label class="px-8">
+                <label class="px-8 flex">
                     "My email is"
                     <input
                         class=move || {
-                            "ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400"
+                            "ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400 grow -top-0.5 relative"
                                 .to_string() + if email_err() { " animate-shake border-rose-600" } else { "" }
                         }
                         type="text"

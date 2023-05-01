@@ -6,11 +6,13 @@ pub fn Navbar(cx: Scope, selected_idx: ReadSignal<usize>) -> impl IntoView {
     const BUTTONS: [&str; 4] = ["Start", "Projects", "About", "Contact"];
 
     view! { cx,
-        <nav class="h-16 w-screen fixed top-0 z-50 pointer-events-none">
-            <div class="flex-1 flex m-auto max-w-full min-h-full px-12
-            justify-between items-center">
-                <p class="text-violet-600 text-2xl pointer-events-auto">"Lawrence Qupty"</p>
-                <div class="flex space-x-4 items-center align-middle pointer-events-auto">
+        <nav class="h-16 w-screen fixed top-0 z-50 lg:pointer-events-none">
+            <div class="flex-1 flex my-4 max-w-full min-h-full px-12
+            justify-between items-center flex-col space-y-4 lg:flex-row lg:my-0">
+                <p class="text-violet-600 text-2xl pointer-events-auto text-left w-auto hidden lg:inline-block">
+                    "Lawrence Qupty"
+                </p>
+                <div class="flex pointer-events-auto w-full lg:w-auto justify-around">
                     {BUTTONS
                         .into_iter()
                         .enumerate()
@@ -31,10 +33,10 @@ fn NavbarButton(
     name: &'static str,
     selected_idx: ReadSignal<usize>,
 ) -> impl IntoView {
-    const CONTAINER: &str = "rounded-md px-8 py-1 flex w-32 group";
+    const CONTAINER: &str = "rounded-md px-8 py-3 lg:py-1 flex w-52 lg:w-32 group";
     const SELECTED: &str = " bg-gray-700 opacity-75";
 
-    const TEXT: &str = "text-white text-center text-lg w-full h-full relative \
+    "text-white text-center text-3xl lg:text-lg w-full h-full relative \
                                 transition-all duration-200 group-hover:-translate-y-2";
 
     let get_container_class =
@@ -48,7 +50,8 @@ fn NavbarButton(
 
     view! { cx,
         <a href=format!("#{}", name.to_lowercase()) class=get_container_class on:click=reset_href>
-            <span class=TEXT>{name}</span>
+            <span class="text-white text-center text-3xl lg:text-lg w-full h-full relative
+            transition-all duration-200 group-hover:-translate-y-2">{name}</span>
         </a>
     }
 }

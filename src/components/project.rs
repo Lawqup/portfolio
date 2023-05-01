@@ -12,10 +12,8 @@ pub fn ProjectCard(
 
     let magnetize = move |ev: MouseEvent| {
         let card = card_ref.get().unwrap().get_bounding_client_rect();
-
         let dx = 0.2 * (ev.client_x() as f64 - card.left() - card.width() / 2.0);
         let dy = 0.2 * (ev.client_y() as f64 - card.top() - card.height() / 2.0);
-        log!("{} {}", ev.client_x(), card.left());
 
         card_ref
             .get()
@@ -24,6 +22,7 @@ pub fn ProjectCard(
             .set_property("transform", &format!("translate({dx}px, {dy}px)"))
             .expect("Property could not be updated");
     };
+
     let unmagnetize = move |_| {
         card_ref
             .get()
@@ -35,20 +34,20 @@ pub fn ProjectCard(
 
     view! { cx,
         <a
-            class="w-80 h-[32rem] transition-all duration-100 ease-linear overflow-hidden bg-violet-600 rounded-lg m-16 px-4 py-2 flex justify-around space-y-8 flex-col border-2 border-white border-solid hover:bg-rose-600 before:content-[''] before:bg-gradient-to-l before:from-white before:w-full before:h-full before:-left-full before:transition-all before:duration-500 before:absolute hover:before:left-full blur-[2px] hover:blur-none"
+            class="w-[40rem] h-[64rem] lg:w-80 lg:h-[32rem] transition-all duration-100 ease-linear overflow-hidden bg-violet-600 rounded-[15px] lg:rounded-lg m-16 px-4 py-2 flex justify-around space-y-8 flex-col border-4 lg:border-2 border-white border-solid hover:bg-rose-600 focus:bg-rose-600 before:content-[''] before:bg-gradient-to-l before:from-white before:w-full before:h-full before:-left-full before:transition-all before:duration-500 before:absolute hover:before:left-full lg:blur-[2px] hover:blur-none"
             on:mousemove=magnetize
             on:mouseleave=unmagnetize
             href=link
             ref=card_ref
         >
             <img
-                class="w-full aspect-square overflow-hidden rounded-lg border-2 border-white border-solid bg-gray-600"
+                class="w-full aspect-square overflow-hidden rounded-[15px] lg:rounded-lg border-4 lg:border-2 border-white border-solid bg-gray-600"
                 alt=""
                 src=src
                 on:load=move |_| set_loading(false)
                 class:animate-pulse=loading
             />
-            <h1 class="text-2xl text-white font-light pb-10">{title}</h1>
+            <h1 class="text-4xl lg:text-2xl text-white font-light pb-10">{title}</h1>
         </a>
     }
 }
