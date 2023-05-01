@@ -289,7 +289,7 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                 <label class="px-8 flex">
                     "I'm"
                     <input
-                        class="ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400 grow -top-0.5 relative"
+                        class="ml-2 text-violet-600 bg-transparent border-b-[5px] lg:border-b-5 border-violet-600 w-52 outline-none focus:border-teal-400 grow -top-0.5 relative"
                         type="text"
                         placeholder="your name"
                         on:input=move |ev| {
@@ -303,7 +303,7 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                     "My email is"
                     <input
                         class=move || {
-                            "ml-2 text-violet-600 bg-transparent border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400 grow -top-0.5 relative"
+                            "ml-2 text-violet-600 bg-transparent border-b-[5px] lg:border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400 grow -top-0.5 relative"
                                 .to_string() + if email_err() { " animate-shake border-rose-600" } else { "" }
                         }
                         type="text"
@@ -316,7 +316,7 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                     />
                 </label>
                 <textarea
-                    class="resize-none rounded-lg bg-black my-8 py-8 px-4 justify-self-center w-full h-3/5"
+                    class="resize-none rounded-[20px] lg:rounded-lg bg-black my-8 py-8 px-4 justify-self-center w-full h-3/5 outline-4 lg:outline-2"
                     placeholder="Your message..."
                     on:input=move |ev| {
                         let val = event_target_value(&ev);
