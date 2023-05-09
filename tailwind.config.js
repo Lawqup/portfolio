@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: { 
     files: ["*.html", "./src/**/*.rs"],
@@ -15,6 +14,9 @@ module.exports = {
         shake: 'shake 0.35s linear 2',
       },
     },
+  },
+  future: {
+    hoverOnlyWhenSupported: true,
   },
   plugins: [
   ],
