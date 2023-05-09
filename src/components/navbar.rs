@@ -37,20 +37,17 @@ fn NavbarButton(
     const CONTAINER: &str = "rounded-md px-8 py-3 lg:py-1 flex w-52 lg:w-32 group";
     const SELECTED: &str = " bg-gray-700 opacity-75";
 
-    "text-white text-center text-3xl lg:text-lg w-full h-full relative \
-                                transition-all duration-200 group-hover:-translate-y-2";
-
     let get_container_class =
         move || CONTAINER.to_string() + if selected_idx() == idx { SELECTED } else { "" };
     let reset_href = move |_| {
         window()
             .location()
-            .set_hash(&name)
+            .set_hash(name)
             .expect("Couldn't set hash");
     };
 
     view! { cx,
-        <a href=format!("#{}", name.to_lowercase()) class=get_container_class on:click=reset_href>
+        <a href=format!("#{name}") class=get_container_class on:click=reset_href>
             <span class="text-white text-center text-3xl lg:text-lg w-full h-full relative
             transition-all duration-200 group-hover:-translate-y-2">{name}</span>
         </a>

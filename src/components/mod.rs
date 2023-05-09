@@ -2,4 +2,8 @@ pub mod homepage;
 
 mod icons;
 mod navbar;
-mod project;
+
+mod start;
+mod projects;
+mod about;
+mod contact;
