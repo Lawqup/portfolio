@@ -131,9 +131,15 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                 <div class="w-full flex flex-col items-center justify-center relative">
                     <p
                         hidden=move || !submit_err()
-                        class="font-normal text-sm text-rose-600 absolute -bottom-6"
+                        class="font-normal text-sm text-rose-600 absolute -top-6"
                     >
                         "An error occured, please try again later."
+                    </p>
+                    <p
+                        hidden=move || !email_err()
+                        class="font-normal text-sm text-rose-600 absolute -top-6"
+                    >
+                        "Please enter a valid email."
                     </p>
                     <button
                         class="bg-black w-56 h-20 rounded-full flex items-center justify-around hover:bg-violet-600 transition duration-500 disabled:opacity-75 disabled:bg-gray-700"
