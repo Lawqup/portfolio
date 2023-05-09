@@ -93,7 +93,7 @@ pub fn ProjectCard(
                 on:load=move |_| set_loading(false)
                 class:animate-pulse=loading
             />
-            <h1 class="text-4xl lg:text-2xl text-white font-light pb-10">{title}</h1>
+            <p class="text-4xl lg:text-2xl text-white font-light pb-10">{title}</p>
         </a>
     }
 }

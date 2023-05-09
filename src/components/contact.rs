@@ -97,6 +97,7 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                         class="ml-2 text-violet-600 bg-transparent border-b-[5px] lg:border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400 grow -top-0.5 relative"
                         type="text"
                         placeholder="your name"
+                        name="name"
                         on:input=move |ev| {
                             let val = event_target_value(&ev);
                             set_name(val);
@@ -111,8 +112,9 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                             "ml-2 text-violet-600 bg-transparent border-b-[5px] lg:border-b-2 border-violet-600 w-52 outline-none focus:border-teal-400 grow -top-0.5 relative"
                                 .to_string() + if email_err() { " animate-shake border-rose-600" } else { "" }
                         }
-                        type="text"
+                        type="email"
                         placeholder="your email"
+                        name="email"
                         on:input=move |ev| {
                             let val = event_target_value(&ev);
                             set_email(val);

@@ -10,9 +10,9 @@ pub fn Navbar(cx: Scope, selected_idx: ReadSignal<usize>) -> impl IntoView {
         <nav class="h-16 w-screen fixed top-0 z-50 lg:pointer-events-none">
             <div class="flex-1 flex my-4 max-w-full min-h-full px-12
             justify-between items-center flex-col space-y-4 lg:flex-row lg:my-0">
-                <p class="text-violet-600 text-2xl pointer-events-auto text-left w-auto hidden lg:inline-block">
+                <h1 class="text-violet-600 text-2xl pointer-events-auto text-left w-auto hidden lg:inline-block">
                     "Lawrence Qupty"
-                </p>
+                </h1>
                 <div class="flex pointer-events-auto w-full lg:w-auto justify-around">
                     {SECTIONS
                         .into_iter()
