@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body {
     font-family: sans-serif;
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 html {
     @apply scroll-smooth;
     color-scheme: dark;
+    overflow-x: hidden;
 }
