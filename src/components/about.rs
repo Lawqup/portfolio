@@ -6,7 +6,7 @@ pub fn About(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
         <section
             ref=_section_ref
             id="About"
-            class="w-screen min-h-screen bg-gradient-to-b from-neutral-900 to-violet-950 flex flex-col items-center justify-center"
+            class="min-h-screen bg-gradient-to-b from-neutral-900 to-violet-950 flex flex-col items-center justify-center"
         >
             <div class="text-6xl lg:text-2xl text-white font-light text-left w-5/6 lg:w-1/2 space-y-16">
                 <h1 class="text-8xl lg:text-5xl font-semibold">"About me"</h1>

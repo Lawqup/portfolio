@@ -57,7 +57,7 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
         <section
             ref=_section_ref
             id="Contact"
-            class="w-screen h-screen bg-violet-950 flex items-center justify-center relative overflow-hidden"
+            class="h-screen bg-violet-950 flex items-center justify-center relative overflow-hidden"
         >
             <div class="absolute">
                 <button

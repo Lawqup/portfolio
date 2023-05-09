@@ -68,7 +68,7 @@ pub fn Start(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
         <section
             ref=_section_ref
             id="Start"
-            class="w-screen h-screen bg-gradient-to-b from-slate-800 to-neutral-900 flex flex-col items-center justify-center"
+            class="h-screen bg-gradient-to-b from-slate-800 to-neutral-900 flex flex-col items-center justify-center"
         >
             <div class="text-6xl lg:text-4xl text-white font-light text-left w-[46rem] lg:w-96 whitespace-nowrap space-y-16">
                 <div>
