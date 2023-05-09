@@ -2,6 +2,10 @@ use gloo_net::http::Headers;
 use gloo_net::http::Request;
 use regex::Regex;
 use std::time::Duration;
+use wasm_bindgen::{prelude::Closure, JsCast};
+use web_sys::IntersectionObserver;
+use web_sys::IntersectionObserverEntry;
+use web_sys::IntersectionObserverInit;
 
 use super::icons::*;
 use super::navbar::*;
@@ -11,6 +15,12 @@ use lazy_static::lazy_static;
 use leptos::html::Section;
 use leptos::*;
 
+#[derive(Debug, Clone, PartialEq)]
+enum ScrollDir {
+    Up,
+    Down,
+}
+
 #[component]
 pub fn HomePage(cx: Scope) -> impl IntoView {
     let start = create_node_ref::<Section>(cx);
@@ -19,32 +29,58 @@ pub fn HomePage(cx: Scope) -> impl IntoView {
     let contact = create_node_ref::<Section>(cx);
 
     let (selected_idx, set_selected_idx) = create_signal(cx, 0);
+    let (prev_scroll, set_prev_scroll) = create_signal(cx, window().scroll_y().unwrap());
+    let (scroll_dir, set_scroll_dir) = create_signal(cx, ScrollDir::Down);
 
-    let detect_curr_section = move || {
-        if start.get().is_none() || projects.get().is_none() || about.get().is_none() {
-            return;
+    let observer_callback: Closure<dyn Fn(Vec<IntersectionObserverEntry>)> =
+        Closure::new(move |entries: Vec<IntersectionObserverEntry>| {
+            if let Some(entry) = entries.last() {
+                let idx = SECTIONS
+                    .iter()
+                    .position(|id| *id == entry.target().id())
+                    .expect("Invalid element observed");
+                if entry.is_intersecting() {
+                    set_selected_idx(idx);
+                } else if scroll_dir() == ScrollDir::Up && idx > 0 {
+                    set_selected_idx(idx - 1);
+                } else if idx < SECTIONS.len() - 1 {
+                    set_selected_idx(idx + 1);
+                }
+            }
+        });
+
+    let mut options = &mut IntersectionObserverInit::new();
+    options = options.root_margin("-200px");
+
+    let observer =
+        IntersectionObserver::new_with_options(observer_callback.as_ref().unchecked_ref(), options)
+            .unwrap();
+
+    window_event_listener("scroll", move |_| {
+        let scroll = window().scroll_y().unwrap();
+        if scroll > prev_scroll() {
+            set_scroll_dir(ScrollDir::Down);
+        } else if scroll < prev_scroll() {
+            set_scroll_dir(ScrollDir::Up);
         }
+        set_prev_scroll(scroll);
+    });
 
-        let start = start.get().unwrap().scroll_height();
-        let projects = projects.get().unwrap().scroll_height() + start;
-        let about = about.get().unwrap().scroll_height() + projects;
-
-        // Add 30-pixel buffer to switch section a bit before
-        const SCROLL_BUFFER: i32 = 30;
-        let scroll_y = window().scroll_y().unwrap().ceil() as i32 + SCROLL_BUFFER;
-        let curr_idx = match scroll_y {
-            x if (..start).contains(&x) || scroll_y == SCROLL_BUFFER => 0,
-            x if (start..projects).contains(&x) => 1,
-            x if (projects..about).contains(&x) => 2,
-            x if (about..).contains(&x) => 3,
-            _ => unreachable!(),
-        };
-
-        set_selected_idx(curr_idx)
+    let observe = move |section_ref: NodeRef<Section>| {
+        let observer = observer.clone();
+        create_effect(cx, move |_| {
+            if let Some(elem) = section_ref.get() {
+                observer.observe(&elem);
+            }
+        })
     };
 
-    create_effect(cx, move |_| detect_curr_section());
-    window_event_listener("scroll", move |_| detect_curr_section());
+    observe(start);
+    observe(projects);
+    observe(about);
+    observe(contact);
+
+    observer_callback.forget();
 
     view! { cx,
         <Navbar selected_idx/>
@@ -122,7 +158,7 @@ pub fn Start(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
     view! { cx,
         <section
             ref=_section_ref
-            id="start"
+            id="Start"
             class="w-screen h-screen bg-gradient-to-b from-slate-800 to-neutral-900 flex flex-col items-center justify-center"
         >
             <div class="text-6xl lg:text-4xl text-white font-light text-left w-[46rem] lg:w-96 whitespace-nowrap space-y-16">
@@ -143,7 +179,7 @@ pub fn Projects(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
     view! { cx,
         <section
             ref=_section_ref
-            id="projects"
+            id="Projects"
             class="w-screen min-h-screen bg-neutral-900 flex justify-center items-center flex-wrap relative"
         >
             <ProjectCard
@@ -175,10 +211,10 @@ pub fn About(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
     view! { cx,
         <section
             ref=_section_ref
-            id="about"
+            id="About"
             class="w-screen min-h-screen bg-gradient-to-b from-neutral-900 to-violet-950 flex flex-col items-center justify-center"
         >
-            <div class="text-4xl lg:text-2xl text-white font-light text-left w-5/6 lg:w-1/2 space-y-16">
+            <div class="text-6xl lg:text-2xl text-white font-light text-left w-5/6 lg:w-1/2 space-y-16">
                 <h1 class="text-8xl lg:text-5xl font-semibold">"About me"</h1>
                 <p>
                     "I'm a developer interested in a bit of everything. From frontend to distributed systems to quantum computing, my only constraint is that I need to be constantly learning."
@@ -251,7 +287,7 @@ pub fn Contact(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
     view! { cx,
         <section
             ref=_section_ref
-            id="contact"
+            id="Contact"
             class="w-screen h-screen bg-violet-950 flex items-center justify-center relative overflow-hidden"
         >
             <div class="absolute">

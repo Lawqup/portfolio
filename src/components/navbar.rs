@@ -1,9 +1,10 @@
 use leptos::*;
 
+pub const SECTIONS: [&str; 4] = ["Start", "Projects", "About", "Contact"];
+
 #[component]
 pub fn Navbar(cx: Scope, selected_idx: ReadSignal<usize>) -> impl IntoView {
     // Lawrence Qupty | ---------------- | Start | Projects | About | Contact
-    const BUTTONS: [&str; 4] = ["Start", "Projects", "About", "Contact"];
 
     view! { cx,
         <nav class="h-16 w-screen fixed top-0 z-50 lg:pointer-events-none">
@@ -13,7 +14,7 @@ pub fn Navbar(cx: Scope, selected_idx: ReadSignal<usize>) -> impl IntoView {
                     "Lawrence Qupty"
                 </p>
                 <div class="flex pointer-events-auto w-full lg:w-auto justify-around">
-                    {BUTTONS
+                    {SECTIONS
                         .into_iter()
                         .enumerate()
                         .map(|(idx, name)| {
@@ -44,7 +45,7 @@ fn NavbarButton(
     let reset_href = move |_| {
         window()
             .location()
-            .set_hash(&name.to_lowercase())
+            .set_hash(&name)
             .expect("Couldn't set hash");
     };
 
