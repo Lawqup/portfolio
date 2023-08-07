@@ -14,7 +14,7 @@ pub fn About(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
                     "I'm a developer interested in a bit of everything. From frontend to distributed systems to quantum computing, my only constraint is that I need to be constantly learning."
                 </p>
                 <p>
-                    "My effort to understand the world through computing led me to graduating from the University of Washington at 17 years old. I love how computers and computer science meet to form this messy-yet-elegant interface into our universe. While learning and challenging my mind is a huge hobby, I also spend an unreasonable amount of time bodybuilding and powerlifting."
+                    "My effort to understand the world through computing led me to graduate from the University of Washington at 17 years old. I love how computers and computer science meet to form this messy-yet-elegant interface into our universe. While learning and challenging my mind is a huge hobby, I also spend an unreasonable amount of time bodybuilding and powerlifting."
                 </p>
                 <p>
                     "You can find a copy of my resume "

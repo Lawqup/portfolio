@@ -13,9 +13,9 @@ pub fn Projects(cx: Scope, _section_ref: NodeRef<Section>) -> impl IntoView {
             class="min-h-screen bg-neutral-900 flex justify-center items-center flex-wrap relative"
         >
             <ProjectCard
-                title="Portfolio Website"
-                src="/assets/portfolio_project.png"
-                link="https://github.com/Lawqup/portfolio"
+                title="Rust-nn"
+                src="/assets/rust-nn.png"
+                link="https://github.com/lawqup/rust-nn"
             />
             <ProjectCard
                 title="Vision"
