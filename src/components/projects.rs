@@ -79,7 +79,7 @@ pub fn ProjectCard(
 
     view! { cx,
         <a
-            class="w-[40rem] h-[64rem] lg:w-80 lg:h-[32rem] transition-all duration-100 ease-linear overflow-hidden bg-violet-600 rounded-[15px] lg:rounded-lg m-16 px-4 py-2 flex justify-around space-y-8 flex-col border-4 lg:border-2 border-white border-solid hover:bg-rose-600 before:content-[''] before:bg-gradient-to-l before:from-white before:w-full before:h-full before:-left-full before:transition-all before:duration-500 before:absolute hover:before:left-full lg:blur-[2px] hover:blur-none"
+            class="w-[40rem] h-[64rem] lg:w-80 lg:h-[32rem] transition-all duration-100 ease-linear overflow-hidden bg-violet-600 rounded-[15px] lg:rounded-lg m-16 px-4 py-2 flex justify-around space-y-8 flex-col border-4 lg:border-2 border-white border-solid hover:bg-rose-600 before:content-[''] before:bg-gradient-to-l before:from-white before:w-full before:h-full before:-left-full before:transition-all before:duration-500 before:absolute hover:before:left-full"
             on:mousemove=magnetize
             on:mouseleave=unmagnetize
             href=link
